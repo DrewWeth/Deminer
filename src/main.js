@@ -1,0 +1,25 @@
+var five = require("johnny-five");
+var Edison = require("edison-io");
+var board = new five.Board({
+  io: new Edison()
+});
+
+board.on("ready", function() {
+  board.info("Starting", "Starting");
+
+  // Create a standard `led` component instance
+  var led = new five.Led(13);
+
+  // "blink" the led in 500ms
+  // on-off phase periods
+  led.blink(500);
+
+  this.pinMode(0, five.Pin.ANALOG);
+  this.pinMode(1, five.Pin.ANALOG);
+  this.analogRead(1, function(voltage){
+    console.log("1: ", voltage);
+  });
+  this.analogRead(0, function(voltage){
+	  console.log("0: ", voltage)
+  });
+});
